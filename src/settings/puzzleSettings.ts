@@ -20,6 +20,8 @@ export type PuzzleSettingsDto = {
   fetchType?: string;
   difficulties?: string[];
   solvedStatuses?: string[];
+  ratingMin?: number;
+  ratingMax?: number;
 };
 
 export type MoveFeedbackDto = {
