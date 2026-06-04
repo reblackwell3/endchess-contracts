@@ -32,6 +32,7 @@ export type MoveFeedbackDto = {
     piece: string;
   };
   hintRequested?: boolean;
+  solutionShown?: boolean;
   isCorrect?: boolean;
   isFinished?: boolean;
 };
