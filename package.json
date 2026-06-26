@@ -1,26 +1,26 @@
 {
-  "name": "endchess-api-settings",
-  "version": "1.4.0",
-  "description": "",
+  "name": "endchess-contracts",
+  "version": "2.0.0",
+  "description": "Shared EndChess DTOs and queue message contracts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
-    "tsc": "./node_modules/typescript/bin/tsc",
+    "tsc": "tsc",
     "build": "npm run clean && tsc",
     "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reblackwell3/endchess-api-settings.git"
+    "url": "git+https://github.com/reblackwell3/endchess-contracts.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/reblackwell3/endchess-api-settings/issues"
+    "url": "https://github.com/reblackwell3/endchess-contracts/issues"
   },
-  "homepage": "https://github.com/reblackwell3/endchess-api-settings#readme",
+  "homepage": "https://github.com/reblackwell3/endchess-contracts#readme",
   "dependencies": {
     "typescript": "^5.5.4"
   },

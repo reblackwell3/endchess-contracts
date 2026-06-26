@@ -1,28 +1,5 @@
-# Endchess monorepo — /staging repo list
+# endchess-contracts
 
-Base path: `C:/Users/rebla/code/`
+See [endchess-contracts-2 README](../README.md).
 
-## Staging apps (`dev` → `staging`)
-
-| Repo | Path |
-| --- | --- |
-| endchess-frontend | `C:/Users/rebla/code/endchess-frontend` |
-| endchess-backend | `C:/Users/rebla/code/endchess-backend` |
-
-## Main repos (`dev` → `main`)
-
-Run in this order when possible (dependencies flow downward).
-
-| Repo | Path |
-| --- | --- |
-| endchess-models | `C:/Users/rebla/code/endchess-models` |
-| react-chess-core | `C:/Users/rebla/code/react-chess-core` |
-| react-chess-explorer | `C:/Users/rebla/code/react-chess-explorer` |
-| react-chess-puzzle-kit | `C:/Users/rebla/code/react-chess-puzzle-kit` |
-| react-chess-replay-trainer | `C:/Users/rebla/code/react-chess-replay-trainer` |
-| endchess-api-settings | `C:/Users/rebla/code/endchess-api-settings` |
-| endchess-analysis-consumer | `C:/Users/rebla/code/endchess-analysis-consumer` |
-| endchess-import-consumer | `C:/Users/rebla/code/endchess-import-consumer` |
-| endchess-batch-import | `C:/Users/rebla/code/endchess-batch-import` |
-| endchess-publisher | `C:/Users/rebla/code/endchess-publisher` |
-| endchess-course-builder | `C:/Users/rebla/code/endchess-course-builder` |
+Published npm package `endchess-contracts@2.x` (formerly `endchess-api-settings`).
