@@ -1,0 +1,1 @@
+export const MAX_USER_IMPORTED_GAMES = 1000;
