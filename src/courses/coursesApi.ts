@@ -1,0 +1,170 @@
+import type { TrainSide } from '../srs/srsDeck';
+
+export type CoursePhase = 'opening' | 'middlegame' | 'endgame';
+export type GamePool = 'repertoire' | 'supplemental' | 'combined';
+export type ParentOpening = 'e4' | 'caro-kann' | 'grunfeld';
+export type SectionKind = 'line-branch' | 'structure' | 'material';
+export type LessonType = 'line' | 'replay';
+
+export type CourseProgressDto = {
+  completedLessonIds: string[];
+  completedSectionIds: string[];
+  ignoredLessonIds: string[];
+  lastLessonId?: string;
+  updatedAt?: string;
+};
+
+/** Lean progress shape used by course mappers (DB row or merged snapshot). */
+export type CourseProgressSnapshot = {
+  completedLessonIds: readonly { toString(): string }[];
+  completedSectionIds: readonly { toString(): string }[];
+  ignoredLessonIds?: readonly { toString(): string }[];
+  lastLessonId?: { toString(): string };
+  updatedAt?: Date | string;
+};
+
+export type LessonPlySeenDto = {
+  seenBefore: boolean;
+  cardCreated: boolean;
+  skipped: boolean;
+};
+
+export type LessonMissedPositionResultDto = {
+  created: boolean;
+  skipped: boolean;
+  graded: boolean;
+};
+
+export type LessonGradePositionResultDto = {
+  graded: boolean;
+};
+
+export type CoursePreviewThumbnailDto = {
+  pgn: string;
+  startFen?: string;
+  setupUci?: string;
+};
+
+export type LessonListItemDto = {
+  lessonId: string;
+  order: number;
+  title: string;
+  type: LessonType;
+  trainSide: TrainSide;
+  plies: number;
+  completed: boolean;
+  ignored: boolean;
+  startFen?: string;
+  date?: string;
+  /** Animated line snippet for hover preview on course line lists. */
+  previewThumbnail?: CoursePreviewThumbnailDto;
+};
+
+export type CourseSectionDto = {
+  sectionId: string;
+  slug: string;
+  title: string;
+  order: number;
+  sectionKind: SectionKind;
+  lessonCount: number;
+  eco?: string;
+  opening?: string;
+  lessons: LessonListItemDto[];
+  completed: boolean;
+};
+
+export type CourseListItemDto = {
+  courseId: string;
+  slug: string;
+  title: string;
+  description: string;
+  phase: CoursePhase;
+  gamePool: GamePool;
+  sectionCount: number;
+  lessonCount: number;
+  avgElo: number;
+  version: string;
+  confirmDepth: number;
+  parentOpening?: ParentOpening;
+  trainSide?: TrainSide;
+  completedLessonCount?: number;
+  completedSectionCount?: number;
+  lastLessonId?: string;
+  lastAccessedAt?: string;
+  previewThumbnails?: CoursePreviewThumbnailDto[];
+};
+
+export type CourseDetailDto = {
+  courseId: string;
+  slug: string;
+  title: string;
+  description: string;
+  phase: CoursePhase;
+  gamePool: GamePool;
+  sectionCount: number;
+  lessonCount: number;
+  avgElo: number;
+  version: string;
+  scanDepth: number;
+  confirmDepth: number;
+  parentOpening?: ParentOpening;
+  trainSide?: TrainSide;
+  sections: CourseSectionDto[];
+  progress: CourseProgressDto;
+};
+
+export type LessonDrillMoveDto = {
+  index: number;
+  isCorrect: boolean;
+};
+
+export type LessonDrillResultDto = {
+  quizAtIndices: number[];
+  cardsCreated: number;
+  cardsUpdated: number;
+  skipped: boolean;
+};
+
+export type LessonDetailDto = {
+  lessonId: string;
+  courseId: string;
+  sectionId: string;
+  order: number;
+  title: string;
+  type: LessonType;
+  coursePhase: CoursePhase;
+  /** 0-based indices where the trainer is to move. */
+  trainIndices: number[];
+  /**
+   * 0-based indices to quiz during line review. Opening courses include every
+   * train index; other phases only include moves with SRS cards (misses).
+   */
+  quizAtIndices: number[];
+  startFen: string;
+  setupFen?: string;
+  setupUci?: string;
+  movesUci: string[];
+  movesSan: string[];
+  trainSide: TrainSide;
+  sourceGameId: string;
+  sourceMeta: {
+    white: string;
+    black: string;
+    whiteElo: number;
+    blackElo: number;
+    eco?: string;
+    opening?: string;
+    result: string;
+    date?: string;
+    timeControl?: string;
+    timeClass?: string;
+  };
+  window: { fromPly: number; toPly: number };
+  quality: {
+    avgCpLoss: number;
+    maxCpLoss: number;
+    halfMoveCount: number;
+    confirmDepth: number;
+  };
+  materialSignature?: string;
+};
