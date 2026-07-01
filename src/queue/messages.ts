@@ -13,6 +13,7 @@ export type ImportGamesMessage = {
 
 export type AnalyzePgnMessage = {
   gameId: string;
+  providerId: string;
   pgn: string;
   color: 'w' | 'b';
 };
