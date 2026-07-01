@@ -43,6 +43,8 @@ export type CoursePreviewThumbnailDto = {
   pgn: string;
   startFen?: string;
   setupUci?: string;
+  /** When set, orients preview boards from this train side. */
+  trainSide?: TrainSide;
 };
 
 export type LessonListItemDto = {
