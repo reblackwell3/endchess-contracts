@@ -89,6 +89,8 @@ export type CourseListItemDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  /** White opening hub grouping for 1.e4 / 1.d4 family courses. */
+  repertoireCollection?: 'e4' | 'd4';
   completedLessonCount?: number;
   completedSectionCount?: number;
   lastLessonId?: string;
@@ -111,6 +113,7 @@ export type CourseDetailDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  repertoireCollection?: 'e4' | 'd4';
   sections: CourseSectionDto[];
   progress: CourseProgressDto;
 };
@@ -119,6 +122,15 @@ export type LessonDrillMoveDto = {
   index: number;
   isCorrect: boolean;
 };
+
+export type CourseLineMasteryState = {
+  masteredSlots: boolean[];
+  skipRemaining: number;
+  slotRepetitionsRemaining?: number[];
+  recoveryTrainSlot?: number;
+};
+
+export type CourseTrainModeKey = 'w' | 'b' | 'both';
 
 export type LessonDrillResultDto = {
   quizAtIndices: number[];
@@ -173,4 +185,5 @@ export type LessonDetailDto = {
   mistakeUci?: string;
   mistakeSan?: string;
   bestUci?: string;
+  lineMastery?: Partial<Record<CourseTrainModeKey, CourseLineMasteryState>>;
 };
