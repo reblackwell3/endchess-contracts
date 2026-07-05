@@ -33,6 +33,8 @@ export type MoveFeedbackDto = {
   };
   hintRequested?: boolean;
   solutionShown?: boolean;
+  /** User opened engine analysis before finishing; counts as a failed attempt but not SRS. */
+  analysisOpened?: boolean;
   isCorrect?: boolean;
   isFinished?: boolean;
 };

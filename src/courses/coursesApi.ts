@@ -1,10 +1,10 @@
 import type { TrainSide } from '../srs/srsDeck';
 
-export type CoursePhase = 'opening' | 'middlegame' | 'endgame';
+export type CoursePhase = 'opening' | 'middlegame' | 'endgame' | 'mistakes';
 export type GamePool = 'repertoire' | 'supplemental' | 'combined';
 export type ParentOpening = 'e4' | 'caro-kann' | 'grunfeld';
 export type SectionKind = 'line-branch' | 'structure' | 'material';
-export type LessonType = 'line' | 'replay';
+export type LessonType = 'line' | 'replay' | 'mistake';
 
 export type CourseProgressDto = {
   completedLessonIds: string[];
@@ -43,6 +43,8 @@ export type CoursePreviewThumbnailDto = {
   pgn: string;
   startFen?: string;
   setupUci?: string;
+  /** When set, orients preview boards from this train side. */
+  trainSide?: TrainSide;
 };
 
 export type LessonListItemDto = {
@@ -87,6 +89,8 @@ export type CourseListItemDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  /** White opening hub grouping for 1.e4 / 1.d4 family courses. */
+  repertoireCollection?: 'e4' | 'd4';
   completedLessonCount?: number;
   completedSectionCount?: number;
   lastLessonId?: string;
@@ -109,6 +113,7 @@ export type CourseDetailDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  repertoireCollection?: 'e4' | 'd4';
   sections: CourseSectionDto[];
   progress: CourseProgressDto;
 };
@@ -117,6 +122,15 @@ export type LessonDrillMoveDto = {
   index: number;
   isCorrect: boolean;
 };
+
+export type CourseLineMasteryState = {
+  masteredSlots: boolean[];
+  skipRemaining: number;
+  slotRepetitionsRemaining?: number[];
+  recoveryTrainSlot?: number;
+};
+
+export type CourseTrainModeKey = 'w' | 'b' | 'both';
 
 export type LessonDrillResultDto = {
   quizAtIndices: number[];
@@ -167,4 +181,9 @@ export type LessonDetailDto = {
     confirmDepth: number;
   };
   materialSignature?: string;
+  setupEvalCp?: number;
+  mistakeUci?: string;
+  mistakeSan?: string;
+  bestUci?: string;
+  lineMastery?: Partial<Record<CourseTrainModeKey, CourseLineMasteryState>>;
 };

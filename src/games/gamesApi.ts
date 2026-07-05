@@ -44,7 +44,7 @@ export type MyGamesApiDto = {
   hasMore?: boolean;
 };
 
-export type GameAnalysisStatus = 'pending' | 'ready' | 'none';
+export type GameAnalysisStatus = 'pending' | 'ready' | 'none' | 'scheduled';
 
 export type MyGameSummaryApiDto = ReplayGameSummaryApiDto & {
   analysisStatus: GameAnalysisStatus;
@@ -55,8 +55,12 @@ export type MistakePlyDto = {
   fen: string;
   playedUci: string;
   playedSan: string;
+  diff?: number;
+  setupEvalCp?: number;
+  quality?: string;
   bestUci?: string;
   bestSan?: string;
+  refutationUci?: string;
   refutationSan?: string;
 };
 
@@ -80,6 +84,7 @@ export type MyGameDetailApiDto = {
   source: GameImportSource;
   analysisStatus: GameAnalysisStatus;
   mistakes: MistakePlyDto[];
+  userColor: 'w' | 'b' | null;
 };
 
 export type PlayerSearchApiDto = {
