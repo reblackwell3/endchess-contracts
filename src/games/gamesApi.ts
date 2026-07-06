@@ -48,8 +48,18 @@ export type MyGamesApiDto = {
 
 export type GameAnalysisStatus = 'pending' | 'ready' | 'none' | 'scheduled';
 
+export type MoveQualityCounts = {
+  best: number;
+  strong: number;
+  inaccuracy: number;
+  mistake: number;
+  blunder: number;
+};
+
 export type MyGameSummaryApiDto = ReplayGameSummaryApiDto & {
   analysisStatus: GameAnalysisStatus;
+  /** Present when analysisStatus is ready. */
+  moveQualityCounts?: MoveQualityCounts;
 };
 
 export type MistakePlyDto = {
@@ -64,6 +74,14 @@ export type MistakePlyDto = {
   bestSan?: string;
   refutationUci?: string;
   refutationSan?: string;
+};
+
+export type MoveQuality = keyof MoveQualityCounts;
+
+export type AnalyzedMovePlyDto = {
+  plyIndex: number;
+  playedUci: string;
+  quality: MoveQuality;
 };
 
 export type MyGameReplayPayload = {
@@ -86,6 +104,7 @@ export type MyGameDetailApiDto = {
   source: GameImportSource;
   analysisStatus: GameAnalysisStatus;
   mistakes: MistakePlyDto[];
+  analyzedMoves: AnalyzedMovePlyDto[];
   userColor: 'w' | 'b' | null;
 };
 
