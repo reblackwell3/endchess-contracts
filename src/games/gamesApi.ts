@@ -16,6 +16,7 @@ export type OpeningSearchRow = {
   source: GameImportSource;
   gameCount: number;
   maxRating: number;
+  familyId?: number;
 };
 
 export type OpeningVariationRow = {
@@ -23,6 +24,7 @@ export type OpeningVariationRow = {
   eco?: string;
   gameCount: number;
   maxRating: number;
+  lineId?: number;
   /** Full variation name from the lichess openings reference table. */
   lichessOpening?: string;
   /** Lichess opening movetext for this variation line. */
@@ -105,6 +107,7 @@ export type OpeningSearchApiDto = {
 
 export type OpeningVariationsApiDto = {
   opening: string;
+  familyId?: number;
   source: GameImportSource;
   variations: OpeningVariationRow[];
 };
@@ -112,6 +115,8 @@ export type OpeningVariationsApiDto = {
 export type OpeningGamesApiDto = {
   opening: string;
   eco?: string;
+  familyId?: number;
+  lineId?: number;
   source: GameImportSource;
   games: ReplayGameSummaryApiDto[];
   offset: number;
