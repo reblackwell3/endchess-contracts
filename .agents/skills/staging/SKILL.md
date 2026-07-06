@@ -151,10 +151,25 @@ gh run watch <run-id> --exit-status
 - Repos with no workflow (consumers, batch jobs, etc.) — no wait; note in the report.
 - If a repo was skipped because `dev` had nothing to promote — do not wait on it.
 - If any watched run fails, **stop**; do not merge staging apps until the user fixes or retries.
-- When all applicable runs succeed, continue to **staging apps**.
+- When all applicable runs succeed, continue to **Promote staging apps** below.
+
+## Promote staging apps (dev → staging)
+
+After main-group CI is green, merge **every** staging app in [repos.md](repos.md) — including **`endchess-workers`**. Workers is a deploy app like frontend and backend; do **not** merge `dev` → `main` there.
+
+Run in order:
+
+1. `endchess-frontend` → `staging`
+2. `endchess-backend` → `staging`
+3. `endchess-workers` → `staging`
+
+For each repo, use the merge procedure above with `<target>` = `staging` and the staging-apps merge commit message.
+
+Pre-flight per repo: `git log origin/staging..origin/dev --oneline` — skip only if empty.
 
 ## Rules (do not violate)
 
+- **Never** merge `dev` → `main` on `endchess-frontend`, `endchess-backend`, or `endchess-workers` — those three are staging apps only (`dev` → `staging`).
 - **Never** merge `staging` → `main` on frontend, backend, or workers (production PRs stay manual on GitHub).
 - **Never** put global skip-ci keywords in merge commit messages or PR bodies (see workspace git rules).
 - **Never** push to `main` on frontend, backend, or workers — only push `staging` there.
@@ -174,4 +189,4 @@ Remind the user that production for frontend, backend, and workers is a separate
 
 ## Repo paths
 
-All repos live under `C:/Users/rebla/code/`. Full list: [repos.md](repos.md).
+All repos live under `/Users/robert/code/endchess/`. Full list: [repos.md](repos.md).
