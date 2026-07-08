@@ -5,6 +5,24 @@ export type GamePool = 'repertoire' | 'supplemental' | 'combined';
 export type ParentOpening = 'e4' | 'caro-kann' | 'grunfeld';
 export type SectionKind = 'line-branch' | 'structure' | 'material';
 export type LessonType = 'line' | 'replay' | 'mistake';
+/** Opening repertoire line selection strategy at build time. */
+export type CourseAlgorithm = 'popularity';
+
+export type CourseFiltersDto = {
+  minElo: number;
+  maxElo: number;
+  sources: string[];
+  /** Games pulled from the master pool when this course was built (0 for opening explorer walks). */
+  numGamesUsed: number;
+};
+
+export type OpeningLineMinN = 0 | 2 | 5 | 10 | 25 | 50;
+
+/** Per-user preferences for one course (keyed by slug). Always normalized on read. */
+export type UserCourseSettingsDto = {
+  openingLineMinN: OpeningLineMinN;
+  openingLineMaxMove: number;
+};
 
 export type CourseProgressDto = {
   completedLessonIds: string[];
@@ -58,6 +76,13 @@ export type LessonListItemDto = {
   ignored: boolean;
   startFen?: string;
   date?: string;
+  /**
+   * Elite-DB game count for this repertoire line (opening popularity).
+   * Absent on engine-built / middlegame / endgame / mistake lessons.
+   */
+  N?: number;
+  /** Full line UCI path; used to apply user max-move filters on opening lists. */
+  movesUci?: string[];
   /** Animated line snippet for hover preview on course line lists. */
   previewThumbnail?: CoursePreviewThumbnailDto;
 };
@@ -114,8 +139,14 @@ export type CourseDetailDto = {
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
   repertoireCollection?: 'e4' | 'd4';
+  /** Opening line selection strategy used at publish (omitted on engine-built courses). */
+  algorithm?: CourseAlgorithm;
+  /** Corpus / popularity knobs used when this course version was generated. */
+  filters: CourseFiltersDto;
   sections: CourseSectionDto[];
   progress: CourseProgressDto;
+  /** Per-user prefs for this course (opening line filters, etc.). */
+  courseSettings: UserCourseSettingsDto;
 };
 
 export type LessonDrillMoveDto = {
@@ -181,6 +212,11 @@ export type LessonDetailDto = {
     confirmDepth: number;
   };
   materialSignature?: string;
+  /**
+   * Elite-DB game count for this repertoire line (opening popularity).
+   * Absent on engine-built / middlegame / endgame / mistake lessons.
+   */
+  N?: number;
   setupEvalCp?: number;
   mistakeUci?: string;
   mistakeSan?: string;

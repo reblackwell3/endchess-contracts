@@ -11,6 +11,8 @@ export * from './entitlements/entitlementsApi';
 export * from './replay/replayApi';
 export * from './explorer/explorerApi';
 export * from './courses/coursesApi';
+export * from './courses/mistakeCourseSlug';
+export * from './courses/openingLineFilterSettings';
 export * from './courses/whiteRepertoireCatalog';
 export * from './courses/whiteRepertoireSettings';
 export * from './games/gamesApi';
