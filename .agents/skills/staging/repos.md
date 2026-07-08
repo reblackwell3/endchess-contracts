@@ -1,16 +1,14 @@
-# Endchess monorepo — /staging repo list
+# Endchess monorepo - /staging repo list
 
-Base path: `/Users/robert/code/endchess/`
+Base path: `C:/Users/rebla/code/`
 
 ## Staging apps (`dev` → `staging`)
 
-Deploy apps promote `dev` → `staging` only. Production is a manual **staging → main** PR.
-
 | Repo | Path |
 | --- | --- |
-| endchess-frontend | `/Users/robert/code/endchess/endchess-frontend` |
-| endchess-backend | `/Users/robert/code/endchess/endchess-backend` |
-| endchess-workers | `/Users/robert/code/endchess/endchess-workers` |
+| endchess-frontend | `C:/Users/rebla/code/endchess-frontend` |
+| endchess-backend | `C:/Users/rebla/code/endchess-backend` |
+| endchess-workers | `C:/Users/rebla/code/endchess-workers` |
 
 ## Main repos (`dev` → `main`)
 
@@ -18,18 +16,18 @@ Run in this order when possible (dependencies flow downward).
 
 | Repo | Path |
 | --- | --- |
-| endchess-models | `/Users/robert/code/endchess/endchess-models` |
-| react-chess-core | `/Users/robert/code/endchess/react-chess-core` |
-| react-chess-explorer | `/Users/robert/code/endchess/react-chess-explorer` |
-| react-chess-puzzle-kit | `/Users/robert/code/endchess/react-chess-puzzle-kit` |
-| react-chess-replay-trainer | `/Users/robert/code/endchess/react-chess-replay-trainer` |
-| endchess-contracts | `/Users/robert/code/endchess/endchess-contracts` |
-| endchess-batch-import | `/Users/robert/code/endchess/endchess-batch-import` |
-| endchess-course-builder | `/Users/robert/code/endchess/endchess-course-builder` |
+| endchess-models | `C:/Users/rebla/code/endchess-models` |
+| react-chess-core | `C:/Users/rebla/code/react-chess-core` |
+| react-chess-explorer | `C:/Users/rebla/code/react-chess-explorer` |
+| react-chess-puzzle-kit | `C:/Users/rebla/code/react-chess-puzzle-kit` |
+| react-chess-replay-trainer | `C:/Users/rebla/code/react-chess-replay-trainer` |
+| endchess-contracts | `C:/Users/rebla/code/endchess-contracts` |
+| endchess-workers | `C:/Users/rebla/code/endchess-workers` |
+| endchess-batch-import | `C:/Users/rebla/code/endchess-batch-import` |
+| endchess-publisher | `C:/Users/rebla/code/endchess-publisher` |
+| endchess-course-builder | `C:/Users/rebla/code/endchess-course-builder` |
 
-## Retired (skip unless present and user explicitly includes)
+## Retired (replaced by backend queue publish + endchess-workers)
 
-- endchess-publisher
 - endchess-import-consumer
 - endchess-analysis-consumer
-- endchess-api-settings (renamed → endchess-contracts)
