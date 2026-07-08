@@ -5,6 +5,16 @@ export type GamePool = 'repertoire' | 'supplemental' | 'combined';
 export type ParentOpening = 'e4' | 'caro-kann' | 'grunfeld';
 export type SectionKind = 'line-branch' | 'structure' | 'material';
 export type LessonType = 'line' | 'replay' | 'mistake';
+/** Opening repertoire line selection strategy at build time. */
+export type CourseAlgorithm = 'popularity';
+
+export type CourseFiltersDto = {
+  minElo: number;
+  maxElo: number;
+  sources: string[];
+  /** Games pulled from the master pool when this course was built (0 for opening explorer walks). */
+  numGamesUsed: number;
+};
 
 export type CourseProgressDto = {
   completedLessonIds: string[];
@@ -119,6 +129,10 @@ export type CourseDetailDto = {
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
   repertoireCollection?: 'e4' | 'd4';
+  /** Opening line selection strategy used at publish (omitted on engine-built courses). */
+  algorithm?: CourseAlgorithm;
+  /** Corpus / popularity knobs used when this course version was generated. */
+  filters: CourseFiltersDto;
   sections: CourseSectionDto[];
   progress: CourseProgressDto;
 };
