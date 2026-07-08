@@ -7,4 +7,4 @@ Shared TypeScript contracts for EndChess:
 
 Previously published as `endchess-api-settings@1.x`.
 
-Developed in the endchess2 workspace as `endchess-contracts-2` with explicit `../endchess-contracts-2` sibling paths on the `dev2` branch (stripped by `/merge-dev2` before merging to `dev`).
+Developed in the endchess2 workspace with sibling `file:../` paths on the `dev2` branch.
