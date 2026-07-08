@@ -16,6 +16,14 @@ export type CourseFiltersDto = {
   numGamesUsed: number;
 };
 
+export type OpeningLineMinN = 0 | 2 | 5 | 10 | 25 | 50;
+
+/** Per-user preferences for one course (keyed by slug). Always normalized on read. */
+export type UserCourseSettingsDto = {
+  openingLineMinN: OpeningLineMinN;
+  openingLineMaxMove: number;
+};
+
 export type CourseProgressDto = {
   completedLessonIds: string[];
   completedSectionIds: string[];
@@ -73,6 +81,8 @@ export type LessonListItemDto = {
    * Absent on engine-built / middlegame / endgame / mistake lessons.
    */
   N?: number;
+  /** Full line UCI path; used to apply user max-move filters on opening lists. */
+  movesUci?: string[];
   /** Animated line snippet for hover preview on course line lists. */
   previewThumbnail?: CoursePreviewThumbnailDto;
 };
@@ -135,6 +145,8 @@ export type CourseDetailDto = {
   filters: CourseFiltersDto;
   sections: CourseSectionDto[];
   progress: CourseProgressDto;
+  /** Per-user prefs for this course (opening line filters, etc.). */
+  courseSettings: UserCourseSettingsDto;
 };
 
 export type LessonDrillMoveDto = {
