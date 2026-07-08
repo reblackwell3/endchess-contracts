@@ -1,6 +1,6 @@
 {
   "name": "endchess-contracts",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Shared EndChess DTOs and queue message contracts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
