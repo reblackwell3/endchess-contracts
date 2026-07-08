@@ -58,6 +58,11 @@ export type LessonListItemDto = {
   ignored: boolean;
   startFen?: string;
   date?: string;
+  /**
+   * Elite-DB game count for this repertoire line (opening popularity).
+   * Absent on engine-built / middlegame / endgame / mistake lessons.
+   */
+  N?: number;
   /** Animated line snippet for hover preview on course line lists. */
   previewThumbnail?: CoursePreviewThumbnailDto;
 };
@@ -181,6 +186,11 @@ export type LessonDetailDto = {
     confirmDepth: number;
   };
   materialSignature?: string;
+  /**
+   * Elite-DB game count for this repertoire line (opening popularity).
+   * Absent on engine-built / middlegame / endgame / mistake lessons.
+   */
+  N?: number;
   setupEvalCp?: number;
   mistakeUci?: string;
   mistakeSan?: string;
