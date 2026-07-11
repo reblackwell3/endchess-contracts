@@ -12,8 +12,26 @@ export type CourseFiltersDto = {
   minElo: number;
   maxElo: number;
   sources: string[];
-  /** Games pulled from the master pool when this course was built (0 for opening explorer walks). */
+  /** Games in the build pool: master-pool limit for engine courses; explorer corpus size for openings. */
   numGamesUsed: number;
+};
+
+/** Build-time metadata stamped when a course version is published. */
+export type CourseMetadataDto = {
+  generatedAt?: string;
+  algorithm?: CourseAlgorithm;
+  filters?: CourseFiltersDto;
+  builderCommitSha?: string;
+};
+
+export type CourseVersionEntryDto = {
+  slug: string;
+  version: string;
+  metadata: CourseMetadataDto;
+};
+
+export type CourseVersionsJsonDto = {
+  courses: CourseVersionEntryDto[];
 };
 
 export type OpeningLineMinN = 0 | 2 | 5 | 10 | 25 | 50;
@@ -121,6 +139,7 @@ export type CourseListItemDto = {
   lastLessonId?: string;
   lastAccessedAt?: string;
   previewThumbnails?: CoursePreviewThumbnailDto[];
+  metadata?: CourseMetadataDto;
 };
 
 export type CourseDetailDto = {
@@ -147,6 +166,7 @@ export type CourseDetailDto = {
   progress: CourseProgressDto;
   /** Per-user prefs for this course (opening line filters, etc.). */
   courseSettings: UserCourseSettingsDto;
+  metadata?: CourseMetadataDto;
 };
 
 export type LessonDrillMoveDto = {
