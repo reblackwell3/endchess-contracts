@@ -1,6 +1,10 @@
 export type WhiteRepertoireCollection = 'e4' | 'd4';
 
-export type WhiteFamilyKind = 'vs-defense' | 'white-system';
+export type WhiteFamilyKind = 'vs-defense' | 'white-system' | 'vs-other';
+
+export type RepertoireRootUci = 'e2e4' | 'd2d4';
+
+export type WhiteOtherSectionSlug = 'e4-other' | 'd4-other';
 
 export type WhiteRepertoireFamilyDef = {
   slug: string;
@@ -10,6 +14,15 @@ export type WhiteRepertoireFamilyDef = {
   prefixUci: readonly string[];
   /** Exclusive fork id when kind is white-system. */
   forkId?: string;
+};
+
+export type WhiteOtherFamilyDef = {
+  slug: string;
+  title: string;
+  collection: WhiteRepertoireCollection;
+  kind: 'vs-other';
+  repertoireRootUci: RepertoireRootUci;
+  otherSectionSlug: WhiteOtherSectionSlug;
 };
 
 export type WhiteRepertoireForkOption = {
@@ -83,6 +96,26 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     collection: 'd4',
     kind: 'vs-defense',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6'],
+  },
+] as const;
+
+/** Auto-included catch-all for popular early branches not in named families. */
+export const WHITE_OTHER_FAMILIES: readonly WhiteOtherFamilyDef[] = [
+  {
+    slug: 'other',
+    title: '1.e4 — Other',
+    collection: 'e4',
+    kind: 'vs-other',
+    repertoireRootUci: 'e2e4',
+    otherSectionSlug: 'e4-other',
+  },
+  {
+    slug: 'other',
+    title: '1.d4 — Other',
+    collection: 'd4',
+    kind: 'vs-other',
+    repertoireRootUci: 'd2d4',
+    otherSectionSlug: 'd4-other',
   },
 ] as const;
 
@@ -179,6 +212,9 @@ export function whiteFamilyCourseSlug(
 export function buildWhiteFamilyCourseSlugs(): string[] {
   return [
     ...WHITE_VS_DEFENSE_FAMILIES.map((f) =>
+      whiteFamilyCourseSlug(f.collection, f.slug),
+    ),
+    ...WHITE_OTHER_FAMILIES.map((f) =>
       whiteFamilyCourseSlug(f.collection, f.slug),
     ),
     ...WHITE_SYSTEM_FAMILIES.map((f) =>
@@ -347,9 +383,14 @@ export function activeWhiteSystemCourseSlugs(
 export function autoIncludedCourseSlugs(
   collection: WhiteRepertoireCollection,
 ): string[] {
-  return WHITE_VS_DEFENSE_FAMILIES.filter((f) => f.collection === collection).map(
-    (f) => whiteFamilyCourseSlug(f.collection, f.slug),
-  );
+  return [
+    ...WHITE_VS_DEFENSE_FAMILIES.filter((f) => f.collection === collection).map(
+      (f) => whiteFamilyCourseSlug(f.collection, f.slug),
+    ),
+    ...WHITE_OTHER_FAMILIES.filter((f) => f.collection === collection).map((f) =>
+      whiteFamilyCourseSlug(f.collection, f.slug),
+    ),
+  ];
 }
 
 export function activeCollectionCourseSlugs(
