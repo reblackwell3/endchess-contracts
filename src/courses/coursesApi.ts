@@ -177,8 +177,17 @@ export type LessonDrillMoveDto = {
 export type CourseLineMasteryState = {
   masteredSlots: boolean[];
   skipRemaining: number;
+  skipInterval?: number;
   slotRepetitionsRemaining?: number[];
   recoveryTrainSlot?: number;
+};
+
+export type CourseLineMasteryPhase = 'drill' | 'repetition';
+
+export type CourseLineMasteryRequestDto = {
+  trainMode: CourseTrainModeKey;
+  perMove: LessonDrillMoveDto[];
+  phase?: CourseLineMasteryPhase;
 };
 
 export type CourseTrainModeKey = 'w' | 'b' | 'both';
@@ -242,4 +251,6 @@ export type LessonDetailDto = {
   mistakeSan?: string;
   bestUci?: string;
   lineMastery?: Partial<Record<CourseTrainModeKey, CourseLineMasteryState>>;
+  /** Ply depth to skip when user has mastered shared opening stems. */
+  stemSkipDepth?: number;
 };
