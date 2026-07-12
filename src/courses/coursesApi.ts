@@ -99,6 +99,11 @@ export type LessonListItemDto = {
    * Absent on engine-built / middlegame / endgame / mistake lessons.
    */
   N?: number;
+  /**
+   * Elite-DB game count after each ply (index = ply - 1); opening popularity
+   * only. Lets clients recompute N when the line is truncated by depth filters.
+   */
+  NPerPly?: number[];
   /** Full line UCI path; used to apply user max-move filters on opening lists. */
   movesUci?: string[];
   /** Animated line snippet for hover preview on course line lists. */
@@ -246,6 +251,8 @@ export type LessonDetailDto = {
    * Absent on engine-built / middlegame / endgame / mistake lessons.
    */
   N?: number;
+  /** Elite-DB game count after each ply (index = ply - 1); opening popularity only. */
+  NPerPly?: number[];
   setupEvalCp?: number;
   mistakeUci?: string;
   mistakeSan?: string;
