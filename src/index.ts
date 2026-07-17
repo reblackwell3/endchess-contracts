@@ -16,4 +16,6 @@ export * from './courses/mistakeCourseSlug';
 export * from './courses/openingLineFilterSettings';
 export * from './courses/whiteRepertoireCatalog';
 export * from './courses/whiteRepertoireSettings';
+export * from './courses/blackRepertoireCatalog';
+export * from './courses/blackRepertoireSettings';
 export * from './games/gamesApi';
