@@ -9,6 +9,7 @@ export * from './srs/srsDeck';
 export * from './srs/srsApi';
 export * from './entitlements/entitlementsApi';
 export * from './replay/replayApi';
+export * from './engine/engineCacheApi';
 export * from './explorer/explorerApi';
 export * from './courses/coursesApi';
 export * from './courses/mistakeCourseSlug';
