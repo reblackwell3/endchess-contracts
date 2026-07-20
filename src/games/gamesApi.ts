@@ -62,6 +62,19 @@ export type MyGameSummaryApiDto = ReplayGameSummaryApiDto & {
   moveQualityCounts?: MoveQualityCounts;
 };
 
+/** Lightweight status row for the analysis poller. */
+export type MyGameAnalysisStatusRowApiDto = {
+  gameId: string;
+  analysisStatus: GameAnalysisStatus;
+  analysisRequestedAt: string;
+  /** Present when analysisStatus is ready. */
+  moveQualityCounts?: MoveQualityCounts;
+};
+
+export type MyGameAnalysisRecentApiDto = {
+  games: MyGameAnalysisStatusRowApiDto[];
+};
+
 export type MistakePlyDto = {
   plyIndex: number;
   fen: string;
