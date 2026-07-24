@@ -12,8 +12,18 @@ export type WhiteRepertoireFamilyDef = {
   collection: WhiteRepertoireCollection;
   kind: WhiteFamilyKind;
   prefixUci: readonly string[];
+  /**
+   * Extra tabiyas for the same opening reached by a different early move order
+   * (e.g. Grünfeld via 3.Nf3 as well as 3.Nc3).
+   */
+  additionalPrefixesUci?: readonly (readonly string[])[];
   /** Exclusive fork id when kind is white-system. */
   forkId?: string;
+  /**
+   * When set, drop popularity lines that match any of these longer prefixes
+   * (used for catch-all courses that share a shorter tabiya).
+   */
+  excludePrefixesUci?: readonly (readonly string[])[];
 };
 
 export type WhiteOtherFamilyDef = {
@@ -70,11 +80,53 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     prefixUci: ['e2e4', 'c7c5'],
   },
   {
-    slug: 'vs-kings-indian',
-    title: "vs King's Indian",
-    collection: 'd4',
+    slug: 'vs-scandinavian',
+    title: 'vs Scandinavian',
+    collection: 'e4',
     kind: 'vs-defense',
-    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6'],
+    prefixUci: ['e2e4', 'd7d5'],
+  },
+  {
+    slug: 'vs-pirc',
+    title: 'vs Pirc',
+    collection: 'e4',
+    kind: 'vs-defense',
+    prefixUci: ['e2e4', 'd7d6'],
+    additionalPrefixesUci: [
+      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    ],
+  },
+  {
+    slug: 'vs-alekhine',
+    title: 'vs Alekhine',
+    collection: 'e4',
+    kind: 'vs-defense',
+    prefixUci: ['e2e4', 'g8f6'],
+  },
+  {
+    slug: 'vs-modern',
+    title: 'vs Modern',
+    collection: 'e4',
+    kind: 'vs-defense',
+    prefixUci: ['e2e4', 'g7g6'],
+    // Pirc via Modern move order (...g6 then ...d6); owned by vs-pirc.
+    excludePrefixesUci: [
+      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    ],
+  },
+  {
+    slug: 'vs-nimzowitsch',
+    title: 'vs Nimzowitsch Defense',
+    collection: 'e4',
+    kind: 'vs-defense',
+    prefixUci: ['e2e4', 'b8c6'],
+  },
+  {
+    slug: 'vs-owen',
+    title: "vs Owen's Defense",
+    collection: 'e4',
+    kind: 'vs-defense',
+    prefixUci: ['e2e4', 'b7b6'],
   },
   {
     slug: 'vs-grunfeld',
@@ -82,6 +134,9 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     collection: 'd4',
     kind: 'vs-defense',
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'b1c3', 'd7d5'],
+    additionalPrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3', 'd7d5'],
+    ],
   },
   {
     slug: 'vs-nimzo-indian',
@@ -91,11 +146,152 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'b1c3', 'f8b4'],
   },
   {
+    slug: 'vs-bogo-indian',
+    title: 'vs Bogo-Indian',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'f8b4'],
+  },
+  {
+    slug: 'vs-queens-indian',
+    title: "vs Queen's Indian",
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'b7b6'],
+    additionalPrefixesUci: [['d2d4', 'g8f6', 'c2c4', 'b7b6']],
+  },
+  {
+    slug: 'vs-indian-e6',
+    title: 'vs Indian — …e6',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6'],
+    excludePrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'b1c3', 'f8b4'], // Nimzo-Indian; owned by vs-nimzo-indian
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'b7b6'], // Queen's Indian; owned by vs-queens-indian
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'f8b4'], // Bogo-Indian; owned by vs-bogo-indian
+    ],
+  },
+  {
+    slug: 'vs-budapest',
+    title: 'vs Budapest Gambit',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e5'],
+  },
+  {
+    slug: 'vs-old-indian',
+    title: 'vs Old Indian',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'd7d6'],
+    // King's Indian via ...d6 then ...g6; owned by vs-kings-indian.
+    excludePrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
+      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
+    ],
+  },
+  {
+    slug: 'vs-kings-indian',
+    title: "vs King's Indian",
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6'],
+    additionalPrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
+      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
+    ],
+    // Grünfeld (...d5 after ...g6); owned by vs-grunfeld.
+    excludePrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'b1c3', 'd7d5'],
+      ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3', 'd7d5'],
+    ],
+  },
+  {
+    slug: 'vs-benoni',
+    title: 'vs Benoni',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'c7c5'],
+    // Benko Gambit (...b5); owned by vs-benko.
+    excludePrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'c7c5', 'd4d5', 'b7b5'],
+    ],
+  },
+  {
+    slug: 'vs-benko',
+    title: 'vs Benko Gambit',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'c7c5', 'd4d5', 'b7b5'],
+  },
+  {
     slug: 'vs-slav',
     title: 'vs Slav',
     collection: 'd4',
     kind: 'vs-defense',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6'],
+    // Semi-Slav continuations (...e6 after ...c6); owned by vs-semi-slav.
+    excludePrefixesUci: [
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
+    ],
+  },
+  {
+    slug: 'vs-semi-slav',
+    title: 'vs Semi-Slav',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
+    // Alt move orders into Semi-Slav (incl. QGD: ...e6 then ...c6).
+    additionalPrefixesUci: [
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
+      ['d2d4', 'd7d5', 'c2c4', 'e7e6', 'b1c3', 'c7c6'],
+    ],
+  },
+  {
+    slug: 'vs-qga',
+    title: "vs Queen's Gambit Accepted",
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'd7d5', 'c2c4', 'd5c4'],
+  },
+  {
+    slug: 'vs-chigorin',
+    title: 'vs Chigorin',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'd7d5', 'c2c4', 'b8c6'],
+  },
+  {
+    slug: 'vs-albin',
+    title: 'vs Albin Countergambit',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'd7d5', 'c2c4', 'e7e5'],
+  },
+  {
+    slug: 'vs-dutch',
+    title: 'vs Dutch',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'f7f5'],
+  },
+  {
+    slug: 'vs-old-benoni',
+    title: 'vs Old Benoni',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'c7c5'],
+  },
+  {
+    slug: 'vs-modern',
+    title: 'vs Modern',
+    collection: 'd4',
+    kind: 'vs-defense',
+    prefixUci: ['d2d4', 'g7g6'],
   },
 ] as const;
 
