@@ -8,6 +8,7 @@ export type BlackBrowseFamilySlug =
   | 'd4-d5'
   | 'french'
   | 'indian'
+  | 'benoni'
   | 'e4-e5'
   | 'caro-kann'
   | 'petrov'
@@ -177,6 +178,96 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
       'a7a6',
     ],
   },
+  {
+    slug: blackFamilyCourseSlug('sicilian', 'other'),
+    title: 'Sicilian — Other',
+    openingFamily: 'Sicilian Defense',
+    browseFamilySlug: 'sicilian',
+    prefixUci: ['e2e4', 'c7c5'],
+    // Open-Sicilian named leaves own these longer prefixes.
+    excludePrefixesUci: [
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'd7d6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'g8f6',
+        'b1c3',
+        'a7a6',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'd7d6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'g8f6',
+        'b1c3',
+        'g7g6',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'd7d6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'g8f6',
+        'b1c3',
+        'b8c6',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'd7d6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'g8f6',
+        'b1c3',
+        'e7e6',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'b8c6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'g8f6',
+        'b1c3',
+        'e7e5',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'e7e6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'b8c6',
+      ],
+      [
+        'e2e4',
+        'c7c5',
+        'g1f3',
+        'e7e6',
+        'd2d4',
+        'c5d4',
+        'f3d4',
+        'a7a6',
+      ],
+    ],
+  },
 
   // --- 1.d4 d5 ---
   {
@@ -307,6 +398,22 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     browseFamilySlug: 'french',
     prefixUci: ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'b1c3', 'd5e4'],
   },
+  {
+    slug: blackFamilyCourseSlug('french', 'other'),
+    title: 'French — Other',
+    openingFamily: 'French Defense',
+    browseFamilySlug: 'french',
+    prefixUci: ['e2e4', 'e7e6'],
+    // Named main-line French leaves own these longer prefixes.
+    excludePrefixesUci: [
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'e4e5', 'c7c5'],
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'b1d2'],
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'e4d5', 'e6d5'],
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'b1c3', 'f8b4'],
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'b1c3', 'g8f6'],
+      ['e2e4', 'e7e6', 'd2d4', 'd7d5', 'b1c3', 'd5e4'],
+    ],
+  },
 
   // --- Indian ---
   {
@@ -366,7 +473,7 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     slug: blackFamilyCourseSlug('indian', 'benoni'),
     title: 'Benoni',
     openingFamily: 'Benoni Defense',
-    browseFamilySlug: 'indian',
+    browseFamilySlug: 'benoni',
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'c7c5'],
     // Benko Gambit (...b5); owned by benko.
     excludePrefixesUci: [
@@ -377,14 +484,14 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     slug: blackFamilyCourseSlug('indian', 'benko'),
     title: 'Benko Gambit',
     openingFamily: 'Benko Gambit',
-    browseFamilySlug: 'indian',
+    browseFamilySlug: 'benoni',
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'c7c5', 'd4d5', 'b7b5'],
   },
   {
     slug: blackFamilyCourseSlug('indian', 'old-benoni'),
     title: 'Old Benoni',
     openingFamily: 'Benoni Defense',
-    browseFamilySlug: 'indian',
+    browseFamilySlug: 'benoni',
     prefixUci: ['d2d4', 'c7c5'],
   },
   {
@@ -411,6 +518,25 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'b1c3', 'd7d5'],
     additionalPrefixesUci: [
       ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3', 'd7d5'],
+    ],
+  },
+  {
+    slug: blackFamilyCourseSlug('indian', 'other'),
+    title: 'Indian — Other',
+    openingFamily: 'Indian Defense',
+    browseFamilySlug: 'indian',
+    prefixUci: ['d2d4', 'g8f6'],
+    // Named 2.c4 Indian / Benoni leaves own these longer prefixes.
+    excludePrefixesUci: [
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'b1c3', 'f8b4'],
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'b7b6'],
+      ['d2d4', 'g8f6', 'c2c4', 'b7b6'],
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'f8b4'],
+      ['d2d4', 'g8f6', 'c2c4', 'e7e6'],
+      ['d2d4', 'g8f6', 'c2c4', 'e7e5'],
+      ['d2d4', 'g8f6', 'c2c4', 'd7d6'],
+      ['d2d4', 'g8f6', 'c2c4', 'c7c5'],
+      ['d2d4', 'g8f6', 'c2c4', 'g7g6'],
     ],
   },
 
@@ -484,6 +610,8 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     openingFamily: "King's Pawn Game",
     browseFamilySlug: 'e4-e5',
     prefixUci: ['e2e4', 'e7e5'],
+    // Petrov is its own leaf course.
+    excludePrefixesUci: [['e2e4', 'e7e5', 'g1f3', 'g8f6']],
   },
   {
     slug: blackFamilyCourseSlug('caro-kann', 'main'),
@@ -559,9 +687,17 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
     ),
   },
   {
+    slug: 'benoni',
+    title: 'Benoni & Benko',
+    order: 80,
+    courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'benoni').map(
+      (c) => c.slug,
+    ),
+  },
+  {
     slug: 'dutch',
     title: 'Dutch Defense',
-    order: 80,
+    order: 90,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'dutch').map(
       (c) => c.slug,
     ),
@@ -569,7 +705,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'modern',
     title: 'Modern Defense',
-    order: 90,
+    order: 100,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'modern').map(
       (c) => c.slug,
     ),
@@ -577,7 +713,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'scandinavian',
     title: 'Scandinavian Defense',
-    order: 100,
+    order: 110,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'scandinavian').map(
       (c) => c.slug,
     ),
@@ -585,7 +721,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'pirc',
     title: 'Pirc Defense',
-    order: 110,
+    order: 120,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'pirc').map(
       (c) => c.slug,
     ),
@@ -593,7 +729,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'alekhine',
     title: 'Alekhine Defense',
-    order: 120,
+    order: 130,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'alekhine').map(
       (c) => c.slug,
     ),
@@ -601,7 +737,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'nimzowitsch',
     title: 'Nimzowitsch Defense',
-    order: 130,
+    order: 140,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'nimzowitsch').map(
       (c) => c.slug,
     ),
@@ -609,7 +745,7 @@ export const BLACK_BROWSE_FAMILIES: readonly BlackBrowseFamilyDef[] = [
   {
     slug: 'owen',
     title: "Owen's Defense",
-    order: 140,
+    order: 150,
     courseSlugs: BLACK_REPERTOIRE_COURSES.filter((c) => c.browseFamilySlug === 'owen').map(
       (c) => c.slug,
     ),
