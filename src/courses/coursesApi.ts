@@ -1,4 +1,5 @@
 import type { TrainSide } from '../srs/srsDeck';
+import type { BlackBrowseFamilySlug } from './blackRepertoireCatalog';
 
 export type CoursePhase = 'opening' | 'middlegame' | 'endgame' | 'mistakes';
 export type GamePool = 'repertoire' | 'supplemental' | 'combined';
@@ -22,6 +23,8 @@ export type CourseMetadataDto = {
   algorithm?: CourseAlgorithm;
   filters?: CourseFiltersDto;
   builderCommitSha?: string;
+  /** Content-stable builder identity (git tree hash or src digest). */
+  builderSourceHash?: string;
 };
 
 export type CourseVersionEntryDto = {
@@ -137,6 +140,8 @@ export type CourseListItemDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  /** Opening → Black browse hub membership persisted with the course. */
+  blackBrowseFamilySlug?: BlackBrowseFamilySlug;
   /** White opening hub grouping for 1.e4 / 1.d4 family courses. */
   repertoireCollection?: 'e4' | 'd4';
   completedLessonCount?: number;
@@ -162,6 +167,8 @@ export type CourseDetailDto = {
   confirmDepth: number;
   parentOpening?: ParentOpening;
   trainSide?: TrainSide;
+  /** Opening → Black browse hub membership persisted with the course. */
+  blackBrowseFamilySlug?: BlackBrowseFamilySlug;
   repertoireCollection?: 'e4' | 'd4';
   /** Opening line selection strategy used at publish (omitted on engine-built courses). */
   algorithm?: CourseAlgorithm;

@@ -36,6 +36,10 @@ export type PlayerOpeningRow = {
   eco?: string;
   count: number;
   percent: number;
+  /** Full variation name from the lichess openings reference table. */
+  lichessOpening?: string;
+  /** Lichess opening movetext for this variation line. */
+  pgn?: string;
 };
 
 export type MyGamesApiDto = {

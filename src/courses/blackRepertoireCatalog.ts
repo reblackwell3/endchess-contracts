@@ -184,6 +184,10 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     openingFamily: 'Sicilian Defense',
     browseFamilySlug: 'sicilian',
     prefixUci: ['e2e4', 'c7c5'],
+    additionalPrefixesUci: [
+      ['e2e4', 'c7c5', 'g1f3', 'b8c6'],
+      ['e2e4', 'c7c5', 'g1f3', 'e7e6'],
+    ],
     // Open-Sicilian named leaves own these longer prefixes.
     excludePrefixesUci: [
       [
@@ -290,10 +294,6 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     openingFamily: "Queen's Gambit Declined",
     browseFamilySlug: 'd4-d5',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'e7e6'],
-    // Semi-Slav via QGD move order (...e6 then ...c6); owned by semi-slav course.
-    excludePrefixesUci: [
-      ['d2d4', 'd7d5', 'c2c4', 'e7e6', 'b1c3', 'c7c6'],
-    ],
   },
   {
     slug: blackFamilyCourseSlug('d4-d5', 'slav'),
@@ -314,11 +314,25 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     openingFamily: 'Semi-Slav Defense',
     browseFamilySlug: 'd4-d5',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
-    // Alt move orders into Semi-Slav (incl. QGD: ...e6 then ...c6).
+    // Alt move orders after Black commits to ...c6 first.
     additionalPrefixesUci: [
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'e7e6', 'b1c3', 'c7c6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'g1f3', 'e7e6'],
+    ],
+  },
+  {
+    slug: blackFamilyCourseSlug('d4-d5', 'semi-slav-other'),
+    title: 'Semi-Slav — Other White setups',
+    openingFamily: 'Semi-Slav Defense',
+    browseFamilySlug: 'd4-d5',
+    prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6'],
+    // The named Semi-Slav course owns the positions where Black commits to ...e6.
+    excludePrefixesUci: [
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'g1f3'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3'],
     ],
   },
   {
@@ -799,6 +813,7 @@ export type BlackRepertoireForkOption = {
   prefixUci: readonly string[];
   forkMoveUci: string;
   settingsValue?: string;
+  alsoActivatesCourseSlugs?: readonly string[];
 };
 
 export type BlackRepertoireForkDef = {
@@ -813,13 +828,13 @@ export type BlackRepertoireForkDef = {
 const D4_D5_ALWAYS_ON_SLUGS = [
   blackFamilyCourseSlug('d4-d5', 'vs-london'),
   blackFamilyCourseSlug('d4-d5', 'vs-colle'),
-  blackFamilyCourseSlug('d4-d5', 'semi-slav'),
   blackFamilyCourseSlug('d4-d5', 'other'),
 ] as const;
 
 function blackForkOption(
-  courseKey: 'qgd' | 'slav' | 'qga' | 'chigorin' | 'albin',
+  courseKey: 'qgd' | 'slav' | 'semi-slav' | 'qga' | 'chigorin' | 'albin',
   forkMoveUci: string,
+  alsoActivatesCourseSlugs?: readonly string[],
 ): BlackRepertoireForkOption {
   const course = BLACK_REPERTOIRE_COURSES.find(
     (entry) => entry.slug === blackFamilyCourseSlug('d4-d5', courseKey),
@@ -833,6 +848,7 @@ function blackForkOption(
     title: course.title,
     prefixUci: course.prefixUci,
     forkMoveUci,
+    alsoActivatesCourseSlugs,
   };
 }
 
@@ -841,10 +857,13 @@ export const BLACK_REPERTOIRE_FORKS: readonly BlackRepertoireForkDef[] = [
     id: 'black-d4-d5-c4',
     collection: 'd4-d5',
     branchPrefixUci: ['d2d4', 'd7d5', 'c2c4'],
-    title: 'Choose your reply to 2.c4',
+    title: 'Choose your defense to 2.c4',
     options: [
       blackForkOption('qgd', 'e7e6'),
       blackForkOption('slav', 'c7c6'),
+      blackForkOption('semi-slav', 'c7c6', [
+        blackFamilyCourseSlug('d4-d5', 'semi-slav-other'),
+      ]),
       blackForkOption('qga', 'd5c4'),
       blackForkOption('chigorin', 'b8c6'),
       blackForkOption('albin', 'e7e5'),
@@ -909,7 +928,14 @@ export function activeBlackSystemCourseSlugs(
     if (!blackForkApplies(fork, forks)) continue;
     const value = forks?.[fork.id];
     if (!value || !isValidBlackForkSelection(fork.id, value)) continue;
-    slugs.push(value);
+    const option = fork.options.find(
+      (entry) => (entry.settingsValue ?? entry.courseSlug) === value,
+    );
+    if (!option) continue;
+    slugs.push(option.courseSlug);
+    if (option.alsoActivatesCourseSlugs?.length) {
+      slugs.push(...option.alsoActivatesCourseSlugs);
+    }
   }
   return slugs;
 }

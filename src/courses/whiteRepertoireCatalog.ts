@@ -33,6 +33,7 @@ export type WhiteOtherFamilyDef = {
   kind: 'vs-other';
   repertoireRootUci: RepertoireRootUci;
   otherSectionSlug: WhiteOtherSectionSlug;
+  excludePrefixesUci?: readonly (readonly string[])[];
 };
 
 export type WhiteRepertoireForkOption = {
@@ -152,10 +153,9 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: 'vs Old Indian',
     collection: 'd4',
     kind: 'vs-defense',
-    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'd7d6'],
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3'],
     // King's Indian via ...d6 then ...g6; owned by vs-kings-indian.
     excludePrefixesUci: [
-      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
       ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
     ],
   },
@@ -164,14 +164,12 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: "vs King's Indian",
     collection: 'd4',
     kind: 'vs-defense',
-    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6'],
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3'],
     additionalPrefixesUci: [
-      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
       ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
     ],
     // Grünfeld (...d5 after ...g6); owned by vs-grunfeld.
     excludePrefixesUci: [
-      ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'b1c3', 'd7d5'],
       ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3', 'd7d5'],
     ],
   },
@@ -199,11 +197,15 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     collection: 'd4',
     kind: 'vs-defense',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6'],
+    additionalPrefixesUci: [
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3'],
+    ],
     // Semi-Slav continuations (...e6 after ...c6); owned by vs-semi-slav.
     excludePrefixesUci: [
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'e7e6', 'b1c3', 'g8f6'],
     ],
   },
   {
@@ -212,11 +214,11 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     collection: 'd4',
     kind: 'vs-defense',
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
-    // Alt move orders into Semi-Slav (incl. QGD: ...e6 then ...c6).
+    // Alt move orders after Black commits to ...c6 first.
     additionalPrefixesUci: [
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'e7e6', 'b1c3', 'c7c6'],
+      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'e7e6', 'b1c3', 'g8f6'],
     ],
   },
   {
@@ -280,6 +282,14 @@ export const WHITE_OTHER_FAMILIES: readonly WhiteOtherFamilyDef[] = [
     kind: 'vs-other',
     repertoireRootUci: 'd2d4',
     otherSectionSlug: 'd4-other',
+    // The selected Queen's Gambit repertoire owns every 1.d4 d5 2.c4 reply.
+    excludePrefixesUci: [
+      ['d2d4', 'd7d5', 'c2c4'],
+      ['d2d4', 'e7e6', 'c2c4', 'd7d5'],
+      ['d2d4', 'c7c6', 'c2c4', 'd7d5'],
+      ['d2d4', 'g8f6', 'c2c4', 'c7c6', 'b1c3', 'd7d5'],
+      ['d2d4', 'c7c6', 'c2c4', 'g8f6', 'b1c3', 'd7d5'],
+    ],
   },
 ] as const;
 
@@ -341,6 +351,9 @@ export const WHITE_SYSTEM_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     kind: 'white-system',
     forkId: 'd4-d5',
     prefixUci: ['d2d4', 'd7d5', 'g1f3', 'g8f6', 'c1f4'],
+    additionalPrefixesUci: [
+      ['d2d4', 'd7d5', 'g1f3', 'e7e6', 'c1f4'],
+    ],
   },
   {
     slug: 'colle-system',
@@ -431,6 +444,17 @@ export const WHITE_SYSTEM_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
       ['d2d4', 'e7e6', 'c2c4', 'g8f6', 'g1f3', 'b7b6'],
       ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'f8b4'], // Bogo-Indian
       ['d2d4', 'e7e6', 'c2c4', 'g8f6', 'g1f3', 'f8b4'],
+    ],
+  },
+  {
+    slug: 'vs-indian-qgd',
+    title: "Queen's Gambit Declined — Indian move order",
+    collection: 'd4',
+    kind: 'white-system',
+    forkId: 'd4-indian-e6',
+    prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'b1c3', 'd7d5'],
+    additionalPrefixesUci: [
+      ['d2d4', 'e7e6', 'c2c4', 'g8f6', 'b1c3', 'd7d5'],
     ],
   },
 ] as const;
@@ -570,6 +594,9 @@ export const WHITE_REPERTOIRE_FORKS: readonly WhiteRepertoireForkDef[] = [
         title: '3.Nc3',
         prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'b1c3'],
         forkMoveUci: 'b1c3',
+        alsoActivatesCourseSlugs: [
+          whiteFamilyCourseSlug('d4', 'vs-indian-qgd'),
+        ],
       },
       {
         slug: 'vs-indian-e6',
