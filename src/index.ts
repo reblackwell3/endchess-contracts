@@ -18,4 +18,5 @@ export * from './courses/whiteRepertoireCatalog';
 export * from './courses/whiteRepertoireSettings';
 export * from './courses/blackRepertoireCatalog';
 export * from './courses/blackRepertoireSettings';
+export * from './courses/repertoirePickerCatalog';
 export * from './games/gamesApi';

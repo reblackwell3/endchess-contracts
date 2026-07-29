@@ -93,6 +93,8 @@ export type ReviewCardDto =
       Themes?: string;
       OpeningTags?: string;
       reviewStartIndex?: number;
+      /** Exclusive end of this card's autoplay segment. */
+      reviewEndIndex?: number;
       quizAtIndices?: number[];
       interval: number;
       dueAt: string;
