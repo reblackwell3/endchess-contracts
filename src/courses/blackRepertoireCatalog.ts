@@ -313,13 +313,14 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     title: 'Semi-Slav',
     openingFamily: 'Semi-Slav Defense',
     browseFamilySlug: 'd4-d5',
+    // Canonical Nf3–Nc3–…e6; skip rarer White move orders that transpose.
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
     // Alt move orders after Black commits to ...c6 first.
-    additionalPrefixesUci: [
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'g1f3', 'e7e6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'g1f3', 'e7e6'],
+    // ],
   },
   {
     slug: blackFamilyCourseSlug('d4-d5', 'semi-slav-other'),
@@ -442,8 +443,9 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     title: "Queen's Indian",
     openingFamily: "Queen's Indian Defense",
     browseFamilySlug: 'indian',
+    // Canonical …e6 then …b6; skip early …b6 move order (transposes, rarer).
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'e7e6', 'g1f3', 'b7b6'],
-    additionalPrefixesUci: [['d2d4', 'g8f6', 'c2c4', 'b7b6']],
+    // additionalPrefixesUci: [['d2d4', 'g8f6', 'c2c4', 'b7b6']],
   },
   {
     slug: blackFamilyCourseSlug('indian', 'bogo'),
@@ -513,11 +515,12 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     title: "King's Indian",
     openingFamily: "King's Indian Defense",
     browseFamilySlug: 'indian',
+    // Canonical …g6; skip …d6-then-…g6 move order (transposes, less common).
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6'],
-    additionalPrefixesUci: [
-      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
-      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'b1c3', 'g7g6'],
+    //   ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
+    // ],
     // Grünfeld (...d5 after ...g6); owned by grunfeld.
     excludePrefixesUci: [
       ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'b1c3', 'd7d5'],
@@ -567,11 +570,12 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     title: 'Modern vs 1.e4',
     openingFamily: 'Modern Defense',
     browseFamilySlug: 'modern',
+    // Keeps …g6 lines including …d6 (Pirc course is canonical …d6 only).
     prefixUci: ['e2e4', 'g7g6'],
-    // Pirc via Modern move order (...g6 then ...d6); owned by pirc.
-    excludePrefixesUci: [
-      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
-    ],
+    // Pirc via Modern move order (...g6 then ...d6); was owned by pirc.
+    // excludePrefixesUci: [
+    //   ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    // ],
   },
   {
     slug: blackFamilyCourseSlug('modern', 'vs-d4'),
@@ -592,10 +596,11 @@ export const BLACK_REPERTOIRE_COURSES: readonly BlackRepertoireCourseDef[] = [
     title: 'Pirc',
     openingFamily: 'Pirc Defense',
     browseFamilySlug: 'pirc',
+    // Canonical …d6; …g6 move order stays on Modern.
     prefixUci: ['e2e4', 'd7d6'],
-    additionalPrefixesUci: [
-      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    // ],
   },
   {
     slug: blackFamilyCourseSlug('alekhine', 'main'),
@@ -792,11 +797,34 @@ export function isMultiCourseBlackFamily(family: BlackBrowseFamilyDef): boolean 
   return family.courseSlugs.length > 1;
 }
 
-/** Families that use a White-style repertoire fork picker instead of listing every leaf. */
+/**
+ * Collections that may own black repertoire forks.
+ * Only `d4-d5` is a browse fork hub; `sicilian` is Other-handoff (2.Nf3) only.
+ */
+export type BlackForkCollectionSlug = 'd4-d5' | 'sicilian';
+
+/**
+ * Browse families that auto-start a fork picker and filter the course list.
+ * Sicilian keeps `black-sicilian-nf3` for Sicilian Other train handoff, but is
+ * not a family-entry gate — named Sicilians stay always listed.
+ */
 export function isBlackForkCollectionFamily(
   slug: BlackBrowseFamilySlug,
-): boolean {
+): slug is BlackForkCollectionSlug {
   return slug === 'd4-d5';
+}
+
+/**
+ * Course that should auto-prompt a black handoff picker before browse/train.
+ * Named Sicilian leaves are never gated; only Sicilian Other.
+ */
+export function blackHandoffPickerCollectionForCourse(
+  courseSlug: string,
+): BlackForkCollectionSlug | null {
+  if (courseSlug === blackFamilyCourseSlug('sicilian', 'other')) {
+    return 'sicilian';
+  }
+  return null;
 }
 
 export function leafCourseSlugForFamily(
@@ -818,7 +846,7 @@ export type BlackRepertoireForkOption = {
 
 export type BlackRepertoireForkDef = {
   id: string;
-  collection: 'd4-d5';
+  collection: BlackForkCollectionSlug;
   branchPrefixUci: readonly string[];
   title: string;
   options: readonly BlackRepertoireForkOption[];
@@ -831,24 +859,51 @@ const D4_D5_ALWAYS_ON_SLUGS = [
   blackFamilyCourseSlug('d4-d5', 'other'),
 ] as const;
 
-function blackForkOption(
-  courseKey: 'qgd' | 'slav' | 'semi-slav' | 'qga' | 'chigorin' | 'albin',
+/**
+ * Sicilian Other stays listed regardless of Open setup picks.
+ * Named Open leaves are activated only by fork selections (incl. nested).
+ * Browse still shows every named leaf because Sicilian is not a fork hub.
+ */
+const SICILIAN_ALWAYS_ON_SLUGS = [
+  blackFamilyCourseSlug('sicilian', 'other'),
+] as const;
+
+function prefixThroughForkMove(
+  coursePrefixUci: readonly string[],
   forkMoveUci: string,
-  alsoActivatesCourseSlugs?: readonly string[],
+): readonly string[] {
+  const forkAt = coursePrefixUci.indexOf(forkMoveUci);
+  if (forkAt >= 0) {
+    return coursePrefixUci.slice(0, forkAt + 1);
+  }
+  return coursePrefixUci;
+}
+
+function blackForkOption(
+  collection: BlackForkCollectionSlug,
+  courseKey: string,
+  forkMoveUci: string,
+  options?: {
+    title?: string;
+    settingsValue?: string;
+    alsoActivatesCourseSlugs?: readonly string[];
+  },
 ): BlackRepertoireForkOption {
   const course = BLACK_REPERTOIRE_COURSES.find(
-    (entry) => entry.slug === blackFamilyCourseSlug('d4-d5', courseKey),
+    (entry) => entry.slug === blackFamilyCourseSlug(collection, courseKey),
   );
   if (!course) {
-    throw new Error(`Missing black d4-d5 course: ${courseKey}`);
+    throw new Error(`Missing black ${collection} course: ${courseKey}`);
   }
   return {
     slug: courseKey,
     courseSlug: course.slug,
-    title: course.title,
-    prefixUci: course.prefixUci,
+    title: options?.title ?? course.title,
+    // Stop at this decision's reply — not the course's deep tabiya.
+    prefixUci: prefixThroughForkMove(course.prefixUci, forkMoveUci),
     forkMoveUci,
-    alsoActivatesCourseSlugs,
+    settingsValue: options?.settingsValue,
+    alsoActivatesCourseSlugs: options?.alsoActivatesCourseSlugs,
   };
 }
 
@@ -859,20 +914,103 @@ export const BLACK_REPERTOIRE_FORKS: readonly BlackRepertoireForkDef[] = [
     branchPrefixUci: ['d2d4', 'd7d5', 'c2c4'],
     title: 'Choose your defense to 2.c4',
     options: [
-      blackForkOption('qgd', 'e7e6'),
-      blackForkOption('slav', 'c7c6'),
-      blackForkOption('semi-slav', 'c7c6', [
-        blackFamilyCourseSlug('d4-d5', 'semi-slav-other'),
-      ]),
-      blackForkOption('qga', 'd5c4'),
-      blackForkOption('chigorin', 'b8c6'),
-      blackForkOption('albin', 'e7e5'),
+      blackForkOption('d4-d5', 'qgd', 'e7e6'),
+      blackForkOption('d4-d5', 'slav', 'c7c6'),
+      blackForkOption('d4-d5', 'semi-slav', 'c7c6', {
+        alsoActivatesCourseSlugs: [
+          blackFamilyCourseSlug('d4-d5', 'semi-slav-other'),
+        ],
+      }),
+      blackForkOption('d4-d5', 'qga', 'd5c4'),
+      blackForkOption('d4-d5', 'chigorin', 'b8c6'),
+      blackForkOption('d4-d5', 'albin', 'e7e5'),
+    ],
+  },
+  {
+    /**
+     * Handoff from Sicilian Other at 2.Nf3. Nested pickers specialize
+     * …d6 / …e6 Open setups; …Nc6 goes straight to Sveshnikov.
+     */
+    id: 'black-sicilian-nf3',
+    collection: 'sicilian',
+    branchPrefixUci: ['e2e4', 'c7c5', 'g1f3'],
+    title: 'Sicilian Other: choose your 2.Nf3 reply',
+    options: [
+      blackForkOption('sicilian', 'najdorf', 'd7d6', {
+        title: '2…d6',
+        settingsValue: 'd6',
+      }),
+      blackForkOption('sicilian', 'sveshnikov', 'b8c6', {
+        title: '2…Nc6',
+        settingsValue: 'nc6',
+      }),
+      blackForkOption('sicilian', 'taimanov', 'e7e6', {
+        title: '2…e6',
+        settingsValue: 'e6',
+      }),
+    ],
+  },
+  {
+    id: 'black-sicilian-d6-nc3',
+    collection: 'sicilian',
+    branchPrefixUci: [
+      'e2e4',
+      'c7c5',
+      'g1f3',
+      'd7d6',
+      'd2d4',
+      'c5d4',
+      'f3d4',
+      'g8f6',
+      'b1c3',
+    ],
+    title: 'Open Sicilian: choose your setup after 5.Nc3',
+    requiresFork: { id: 'black-sicilian-nf3', settingsValue: 'd6' },
+    options: [
+      blackForkOption('sicilian', 'najdorf', 'a7a6', {
+        title: '5…a6 (Najdorf)',
+        settingsValue: 'a6',
+      }),
+      blackForkOption('sicilian', 'dragon', 'g7g6', {
+        title: '5…g6 (Dragon)',
+        settingsValue: 'g6',
+      }),
+      blackForkOption('sicilian', 'classical', 'b8c6', {
+        title: '5…Nc6 (Classical)',
+        settingsValue: 'nc6',
+      }),
+      // Scheveningen often has too few elite lines at local 4/8 to publish.
+    ],
+  },
+  {
+    id: 'black-sicilian-e6-open',
+    collection: 'sicilian',
+    branchPrefixUci: [
+      'e2e4',
+      'c7c5',
+      'g1f3',
+      'e7e6',
+      'd2d4',
+      'c5d4',
+      'f3d4',
+    ],
+    title: 'Open Sicilian: choose your setup after 4.Nxd4',
+    requiresFork: { id: 'black-sicilian-nf3', settingsValue: 'e6' },
+    options: [
+      blackForkOption('sicilian', 'taimanov', 'b8c6', {
+        title: '4…Nc6 (Taimanov)',
+        settingsValue: 'nc6',
+      }),
+      blackForkOption('sicilian', 'kan', 'a7a6', {
+        title: '4…a6 (Kan)',
+        settingsValue: 'a6',
+      }),
     ],
   },
 ] as const;
 
 export function blackForksForCollection(
-  collection: 'd4-d5',
+  collection: BlackForkCollectionSlug,
 ): readonly BlackRepertoireForkDef[] {
   return BLACK_REPERTOIRE_FORKS.filter((fork) => fork.collection === collection);
 }
@@ -903,7 +1041,7 @@ export function blackForkApplies(
 }
 
 export function unresolvedBlackForksForCollection(
-  collection: 'd4-d5',
+  collection: BlackForkCollectionSlug,
   forks: Record<string, string> | undefined,
 ): BlackRepertoireForkDef[] {
   return blackForksForCollection(collection).filter((fork) => {
@@ -914,13 +1052,16 @@ export function unresolvedBlackForksForCollection(
   });
 }
 
-export function autoIncludedBlackCourseSlugs(collection: 'd4-d5'): string[] {
-  if (collection !== 'd4-d5') return [];
-  return [...D4_D5_ALWAYS_ON_SLUGS];
+export function autoIncludedBlackCourseSlugs(
+  collection: BlackForkCollectionSlug,
+): string[] {
+  if (collection === 'd4-d5') return [...D4_D5_ALWAYS_ON_SLUGS];
+  if (collection === 'sicilian') return [...SICILIAN_ALWAYS_ON_SLUGS];
+  return [];
 }
 
 export function activeBlackSystemCourseSlugs(
-  collection: 'd4-d5',
+  collection: BlackForkCollectionSlug,
   forks: Record<string, string> | undefined,
 ): string[] {
   const slugs: string[] = [];
@@ -932,16 +1073,25 @@ export function activeBlackSystemCourseSlugs(
       (entry) => (entry.settingsValue ?? entry.courseSlug) === value,
     );
     if (!option) continue;
-    slugs.push(option.courseSlug);
-    if (option.alsoActivatesCourseSlugs?.length) {
-      slugs.push(...option.alsoActivatesCourseSlugs);
+    // Parent gateway choices (e.g. 2…d6) defer leaf activation to nested forks.
+    const nestedSpecializes = BLACK_REPERTOIRE_FORKS.some(
+      (child) =>
+        child.collection === collection &&
+        child.requiresFork?.id === fork.id &&
+        child.requiresFork.settingsValue === value,
+    );
+    if (!nestedSpecializes) {
+      slugs.push(option.courseSlug);
+      if (option.alsoActivatesCourseSlugs?.length) {
+        slugs.push(...option.alsoActivatesCourseSlugs);
+      }
     }
   }
   return slugs;
 }
 
 export function activeBlackCollectionCourseSlugs(
-  collection: 'd4-d5',
+  collection: BlackForkCollectionSlug,
   forks: Record<string, string> | undefined,
 ): string[] {
   return [
