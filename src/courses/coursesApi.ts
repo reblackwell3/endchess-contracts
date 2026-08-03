@@ -30,6 +30,9 @@ export type CourseMetadataDto = {
 export type CourseVersionEntryDto = {
   slug: string;
   version: string;
+  phase: CoursePhase;
+  scanDepth: number;
+  confirmDepth: number;
   metadata: CourseMetadataDto;
 };
 
