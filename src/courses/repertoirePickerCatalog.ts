@@ -20,6 +20,8 @@ export type RepertoirePickerOptionDef = {
   courseSlug: string;
   title: string;
   forkMoveUci: string;
+  /** Extra courses that also own continuations past this decision (not truncated). */
+  alsoActivatesCourseSlugs?: readonly string[];
 };
 
 export type RepertoirePickerDecisionDef = {
@@ -54,6 +56,7 @@ function normalizeFork(
       courseSlug: option.courseSlug,
       title: option.title,
       forkMoveUci: option.forkMoveUci,
+      alsoActivatesCourseSlugs: option.alsoActivatesCourseSlugs,
     })),
   };
 }

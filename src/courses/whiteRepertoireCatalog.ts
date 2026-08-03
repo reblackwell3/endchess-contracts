@@ -94,10 +94,11 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: 'vs Pirc',
     collection: 'e4',
     kind: 'vs-defense',
+    // Canonical …d6; …g6 move order stays on vs-modern.
     prefixUci: ['e2e4', 'd7d6'],
-    additionalPrefixesUci: [
-      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    // ],
   },
   {
     slug: 'vs-alekhine',
@@ -111,11 +112,12 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: 'vs Modern',
     collection: 'e4',
     kind: 'vs-defense',
+    // Keeps …g6 lines including …d6 (vs-pirc is canonical …d6 only).
     prefixUci: ['e2e4', 'g7g6'],
-    // Pirc via Modern move order (...g6 then ...d6); owned by vs-pirc.
-    excludePrefixesUci: [
-      ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
-    ],
+    // Pirc via Modern move order (...g6 then ...d6); was owned by vs-pirc.
+    // excludePrefixesUci: [
+    //   ['e2e4', 'g7g6', 'd2d4', 'f8g7', 'b1c3', 'd7d6'],
+    // ],
   },
   {
     slug: 'vs-nimzowitsch',
@@ -164,10 +166,11 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: "vs King's Indian",
     collection: 'd4',
     kind: 'vs-defense',
+    // Canonical …g6; skip …d6-then-…g6 move order (transposes, less common).
     prefixUci: ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3'],
-    additionalPrefixesUci: [
-      ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['d2d4', 'g8f6', 'c2c4', 'd7d6', 'g1f3', 'g7g6'],
+    // ],
     // Grünfeld (...d5 after ...g6); owned by vs-grunfeld.
     excludePrefixesUci: [
       ['d2d4', 'g8f6', 'c2c4', 'g7g6', 'g1f3', 'd7d5'],
@@ -196,10 +199,11 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: 'vs Slav',
     collection: 'd4',
     kind: 'vs-defense',
+    // Canonical walk from …c6 (most popular White replies); no forced e3 alt order.
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6'],
-    additionalPrefixesUci: [
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3'],
+    // ],
     // Semi-Slav continuations (...e6 after ...c6); owned by vs-semi-slav.
     excludePrefixesUci: [
       ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
@@ -213,13 +217,14 @@ export const WHITE_VS_DEFENSE_FAMILIES: readonly WhiteRepertoireFamilyDef[] = [
     title: 'vs Semi-Slav',
     collection: 'd4',
     kind: 'vs-defense',
+    // Canonical Nf3–Nc3–…e6; skip rarer White move orders that transpose.
     prefixUci: ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'b1c3', 'e7e6'],
     // Alt move orders after Black commits to ...c6 first.
-    additionalPrefixesUci: [
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
-      ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'e7e6', 'b1c3', 'g8f6'],
-    ],
+    // additionalPrefixesUci: [
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'b1c3', 'g8f6', 'e2e3', 'e7e6'],
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'g8f6', 'e2e3', 'e7e6'],
+    //   ['d2d4', 'd7d5', 'c2c4', 'c7c6', 'g1f3', 'e7e6', 'b1c3', 'g8f6'],
+    // ],
   },
   {
     slug: 'vs-qga',

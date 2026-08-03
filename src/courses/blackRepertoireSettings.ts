@@ -2,6 +2,7 @@ import {
   activeBlackCollectionCourseSlugs,
   BLACK_REPERTOIRE_FORKS,
   isValidBlackForkSelection,
+  type BlackForkCollectionSlug,
 } from './blackRepertoireCatalog';
 
 export type BlackRepertoireForks = Record<string, string>;
@@ -46,7 +47,7 @@ export function validateBlackRepertoireForks(
 
 export function filterCoursesByBlackCollection<T extends { slug: string }>(
   courses: readonly T[],
-  collection: 'd4-d5',
+  collection: BlackForkCollectionSlug,
   forks: BlackRepertoireForks | undefined,
 ): T[] {
   const allowed = new Set(activeBlackCollectionCourseSlugs(collection, forks));
